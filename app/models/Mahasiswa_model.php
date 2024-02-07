@@ -2,29 +2,25 @@
 
 class Mahasiswa_model
 {
-    private $mhs = [
-        [
-            "nama" => "Wahyu",
-            "nip" => "11170631",
-            "email" => "wahyu@gmail.com",
-            "jurusan" => "Sistem Informasi"
-        ],
-        [
-            "nama" => "Shalsa",
-            "nip" => "11170432",
-            "email" => "shalsa@gmail.com",
-            "jurusan" => "Teknik Informatika"
-        ],
-        [
-            "nama" => "Dody",
-            "nip" => "11170213",
-            "email" => "dody@gmail.com",
-            "jurusan" => "Sistem Informasi"
-        ]
-    ];
+    private $dbh; //variabel
+    private $stmt; //variabel
 
-    public function getAllMahasiswa()
+    public function __construct() //koneksi ke databases
     {
-        return $this->mhs;
+        //data source name
+        $dsn = 'mysql:host=localhost;dbname=phpmvc'; //identitas server
+
+        try { //pengecekan koneksi ke databases
+            $this->dbh = new PDO($dsn, 'root', '');
+        } catch (PDOException $e) {
+            die($e->getMessage());
+        }
+    }
+
+    public function getAllMahasiswa() //methot
+    {
+        $this->stmt = $this->dbh->prepare('SELECT * FROM mahasiswa');
+        $this->stmt->execute(); //mulai eksekusi
+        return $this->stmt->fetchAll(PDO::FETCH_ASSOC); //tangkap araynya dan jadikan asosiatif
     }
 }
