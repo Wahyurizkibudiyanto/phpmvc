@@ -4,8 +4,8 @@ class Mahasiswa extends Controller
 {
     public function index()
     {
-        $data['Judul'] = 'Daftar Mahasiswa';
-        $this->view('templates/header');
+        $data['judul'] = 'Mahasiswa';
+        $this->view('templates/header', $data);
         $this->view('mahasiswa/index');
         $this->view('templates/header');
     }
